@@ -12,7 +12,7 @@ import fi.dy.masa.itemscroller.event.RenderEventHandler;
 @Mixin(net.minecraft.client.render.GameRenderer.class)
 public abstract class MixinGameRenderer
 {
-    @Shadow @Final private net.minecraft.client.MinecraftClient client;
+    @Shadow @Final net.minecraft.client.MinecraftClient client;
 
     @Inject(method = "render(FJZ)V",
             at = @At(value = "INVOKE", shift = Shift.AFTER,
