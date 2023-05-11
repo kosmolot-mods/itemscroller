@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntComparator;
 
+import net.minecraft.class_8566;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
@@ -21,7 +22,6 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -72,7 +72,7 @@ public class InventoryUtils
     }
 
     public static void onSlotChangedCraftingGrid(PlayerEntity player,
-                                                 CraftingInventory craftMatrix,
+                                                 class_8566 craftMatrix,
                                                  CraftingResultInventory inventoryCraftResult)
     {
         if (inhibitCraftResultUpdate && Configs.Generic.MASS_CRAFT_INHIBIT_MID_UPDATES.getBooleanValue())
@@ -94,13 +94,13 @@ public class InventoryUtils
             outputSlot instanceof CraftingResultSlot resultSlot &&
             resultSlot.inventory instanceof CraftingResultInventory resultInv)
         {
-            CraftingInventory craftingInv = ((IMixinCraftingResultSlot) outputSlot).itemscroller_getCraftingInventory();
+            class_8566 craftingInv = ((IMixinCraftingResultSlot) outputSlot).itemscroller_getCraftingInventory();
             updateCraftingOutputSlot(player, craftingInv, resultInv, true);
         }
     }
 
     public static void updateCraftingOutputSlot(PlayerEntity player,
-                                                CraftingInventory craftMatrix,
+                                                class_8566 craftMatrix,
                                                 CraftingResultInventory inventoryCraftResult,
                                                 boolean setEmptyStack)
     {
@@ -688,7 +688,7 @@ public class InventoryUtils
 
         // Picked up or swapped items to the cursor, grab a reference to the slot that the items came from
         // Note that we are only checking the item here!
-        if (isStackEmpty(stackCursor) == false && stackCursor.isItemEqual(stackInCursorLast) == false && sourceSlotCandidate != null)
+        if (isStackEmpty(stackCursor) == false && ItemStack.areItemsEqual(stackCursor, stackInCursorLast) == false && sourceSlotCandidate != null)
         {
             sourceSlot = new WeakReference<>(sourceSlotCandidate.get());
         }
@@ -2070,7 +2070,7 @@ public class InventoryUtils
 
     public static boolean areStacksEqual(ItemStack stack1, ItemStack stack2)
     {
-        return stack1.isEmpty() == false && stack1.isItemEqual(stack2) && ItemStack.areNbtEqual(stack1, stack2);
+        return stack1.isEmpty() == false && ItemStack.areItemsEqual(stack1, stack2) && ItemStack.areEqual(stack1, stack2);
     }
 
     private static boolean areSlotsInSameInventory(Slot slot1, Slot slot2)
