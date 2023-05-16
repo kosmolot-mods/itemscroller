@@ -11,7 +11,6 @@ import javax.annotation.Nullable;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntComparator;
 
-import net.minecraft.class_8566;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
@@ -24,6 +23,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.RecipeType;
@@ -72,7 +72,7 @@ public class InventoryUtils
     }
 
     public static void onSlotChangedCraftingGrid(PlayerEntity player,
-                                                 class_8566 craftMatrix,
+                                                 RecipeInputInventory craftMatrix,
                                                  CraftingResultInventory inventoryCraftResult)
     {
         if (inhibitCraftResultUpdate && Configs.Generic.MASS_CRAFT_INHIBIT_MID_UPDATES.getBooleanValue())
@@ -94,13 +94,13 @@ public class InventoryUtils
             outputSlot instanceof CraftingResultSlot resultSlot &&
             resultSlot.inventory instanceof CraftingResultInventory resultInv)
         {
-            class_8566 craftingInv = ((IMixinCraftingResultSlot) outputSlot).itemscroller_getCraftingInventory();
+            RecipeInputInventory craftingInv = ((IMixinCraftingResultSlot) outputSlot).itemscroller_getCraftingInventory();
             updateCraftingOutputSlot(player, craftingInv, resultInv, true);
         }
     }
 
     public static void updateCraftingOutputSlot(PlayerEntity player,
-                                                class_8566 craftMatrix,
+                                                RecipeInputInventory craftMatrix,
                                                 CraftingResultInventory inventoryCraftResult,
                                                 boolean setEmptyStack)
     {
