@@ -305,6 +305,7 @@ public class RenderEventHandler
             InventoryUtils.setStackSize(stack, 1);
 
             MatrixStack matrixStack = drawContext.getMatrices();
+            matrixStack.push();
             matrixStack.translate(0, 0, 100.f);
 
             drawContext.drawItem(stack, x, y);
